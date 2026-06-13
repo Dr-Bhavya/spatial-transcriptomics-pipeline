@@ -1,9 +1,11 @@
 nextflow.enable.dsl=2
 
 process PROCESS_SPATIAL_DATA {
-    container 'spatial-seurat-arm64:latest'
-    
     publishDir "s3://seurat-spatial-Bhavya/results", mode: 'copy'
+
+    input:
+    path create_script
+    path analysis_script
 
     output:
     path "spatial_clusters_overlay.png"
@@ -11,17 +13,16 @@ process PROCESS_SPATIAL_DATA {
 
     script:
     """
-    mkdir -p spatial_data
-    
-    # Download the real matrix file dataset instead of the homepage
-    curl -sSL "https://10xgenomics.com" -o matrix.tar.gz
-    tar -xzf matrix.tar.gz -C spatial_data --strip-components=1
-    
-    # Run the production analysis R script baked inside the container
-    Rscript /pipeline/spatial_analysis.R
+    # Execute the localized scripts right inside the container environment
+    Rscript ${create_script}
+    Rscript ${analysis_script}
     """
 }
 
 workflow {
-    PROCESS_SPATIAL_DATA()
+    # Channels pass the files directly as inputs to the process block
+    create_toy_ch = channel.fromPath('./create_toy_data.R')
+    spatial_an_ch = channel.fromPath('./spatial_analysis.R')
+    
+    PROCESS_SPATIAL_DATA(create_toy_ch, spatial_an_ch)
 }
