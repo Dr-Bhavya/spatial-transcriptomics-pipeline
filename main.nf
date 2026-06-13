@@ -13,14 +13,14 @@ process PROCESS_SPATIAL_DATA {
 
     script:
     """
-    # Execute the localized scripts right inside the container environment
+    # Inside the bash execution string, hashtags are completely valid
     Rscript ${create_script}
     Rscript ${analysis_script}
     """
 }
 
 workflow {
-    # Channels pass the files directly as inputs to the process block
+    // Nextflow DSL2 comments require double forward slashes
     create_toy_ch = channel.fromPath('./create_toy_data.R')
     spatial_an_ch = channel.fromPath('./spatial_analysis.R')
     
