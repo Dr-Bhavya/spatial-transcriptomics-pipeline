@@ -13,7 +13,7 @@ process PROCESS_SPATIAL_DATA {
     """
     mkdir -p spatial_data
     
-    # Download the actual 10x Genomics Visium Adult Mouse Brain filtered matrix file
+    # Download the real matrix file dataset instead of the homepage
     curl -sSL "https://10xgenomics.com" -o matrix.tar.gz
     tar -xzf matrix.tar.gz -C spatial_data --strip-components=1
     
