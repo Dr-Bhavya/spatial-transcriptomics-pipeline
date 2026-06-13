@@ -13,11 +13,11 @@ process PROCESS_SPATIAL_DATA {
     """
     mkdir -p spatial_data
     
-    # Download the 10x Genomics Visium Adult Mouse Brain filtered matrix files
+    # Download the actual 10x Genomics Visium Adult Mouse Brain filtered matrix file
     curl -sSL "https://10xgenomics.com" -o matrix.tar.gz
     tar -xzf matrix.tar.gz -C spatial_data --strip-components=1
     
-    # Run the production analysis R script 
+    # Run the production analysis R script baked inside the container
     Rscript /pipeline/spatial_analysis.R
     """
 }
