@@ -14,4 +14,4 @@ This repository serves as a robust pipeline skeleton designed to ingest spot-res
 
 ## 🏗️ Pipeline Architecture & Logic Flow
 
-The pipeline executes a structured, sequential four-stage Machine Learning and Geospatial mapping workflows
+The pipeline executes a structured, sequential four-stage Machine Learning and Geospatial mapping workflow
